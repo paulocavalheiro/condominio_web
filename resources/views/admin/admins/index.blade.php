@@ -9,7 +9,8 @@
                 <div class="card-header bg-light col-md-12">
                    Administradores
                 </div>
-                <form method="POST" action="{{url('admin/admins/busca')}}">
+
+                <form method="POST" class="form-table" formaction="{{ url('admin/admins/busca') }}">                
                     @csrf
                     <div class="col-md-4" style="float: right">
                         <div class="input-group mb-3">
@@ -25,13 +26,14 @@
                                 <input type="text" id="buscaUsuario" name="buscaUsuario" class="form-control" placeholder="Busca"  >
                                 <div class="input-group-apend">
 
-                                    <button class="btn btn-outline-dark">Buscar</button>
+                                    <button class="btn btn-outline-dark ">Buscar</button>
                                 </div>
                             @endif
                         </div>
                     </div>
                 </form>
-
+               
+                
                 <div class="col-md-12">
                    @if($message = Session::get('message'))
                         <div class="alert alert-success">
@@ -39,7 +41,7 @@
                         </div>
                     @endif
                 </div>
-
+                
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table">
@@ -66,9 +68,9 @@
                                     </tr>
                                 @endforeach
                             @else
-
+                                
                                 <tr>
-                                    <td colspan="6">Nenhum registro encontrado</td>
+                                    <td> Nenhum registro encontrado</td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -127,11 +129,36 @@
 
             document.getElementById("nameUser").innerHTML = name;
             var a = document.querySelector('a[href="trocalink"]');
+            /*
             if (a) {
-                @if(isset($users) )
-                    a.setAttribute('href', 'admins/{{$user->id}}/destroy')
-                @endif
+                // @if(isset($users) && !$users->isEmpty() )
+                //     a.setAttribute('href', 'admins/{{$user->id}}/destroy')
+                // @endif
             }
+            */
+        });
+
+        $('.search-user').on('click', function(e) {
+            console.log($('#buscaUsuario').val() )
+
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ URL::to('admin/admins/busca') }}",
+                data: { 
+                    "_token": "{{ csrf_token() }}",
+                    buscaUsuario: $('#buscaUsuario').val() 
+                },
+                success: function(response) {
+                    // Manipule a resposta aqui
+                    console.log(response);
+                },
+                error: function(error) {
+                    console.error('Erro na solicitação AJAX', error);
+                }
+            });
+
         });
 
     </script>

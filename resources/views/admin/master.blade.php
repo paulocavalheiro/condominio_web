@@ -37,7 +37,7 @@
         </a>
 
         <a class="navbar-brand" href="#">
-            <img src="{{asset('/frontEnd2')}}/imgs/condolonLogo.png" alt="logo" width="110px">
+            <img src="{{asset('/frontEnd2')}}/imgs/BlackLogo.png" alt="logo" width="40px">
         </a>
 
         <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">

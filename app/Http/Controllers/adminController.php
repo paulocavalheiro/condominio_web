@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Hash;
 class adminController extends Controller
 {
 
-    public function create(){
-        return view('admin/admins/create');
-    }
-
-
     public function index(){
 
         $users = User::where('isAdmin','=',1)
@@ -23,12 +18,16 @@ class adminController extends Controller
 
     }
 
+    public function create(){
+        return view('admin/admins/create');
+
+    }
 
     public function store(request $request){
 
         $this->validate($request,[
             'name' => 'required|min:5',
-            'email' => 'required|unique:users',
+            'email' => 'required|unique:users|email',
             'password' => 'required|min:6'
 
         ]);
@@ -60,8 +59,7 @@ class adminController extends Controller
 
         $this->validate($request,[
             'name' => 'required|min:5',
-            'email' => 'required',
-
+            'email' => 'required|email|unique:users'
         ]);
 
         $user->name = $request->get('name');
@@ -76,7 +74,6 @@ class adminController extends Controller
 
     }
 
-
     public function destroy ($id){
 
         $user = User::find($id);
@@ -90,15 +87,20 @@ class adminController extends Controller
 
 
     public function busca(request $request){
-
+        
         $busca = $request->input('buscaUsuario');
-        $users = User::where('name', 'LIKE', '%' . $busca . '%')
-            ->orwhere('email', 'LIKE', '%' . $busca . '%')
-            ->where('isAdmin', '=', 1)
-            ->where('status', '=', 1)
-            ->paginate(10);
+        if(!$busca){
+            return $this->index();
+        }else{            
+            $users = User::where('name', 'LIKE', '%' . $busca . '%')
+                ->orwhere('email', 'LIKE', '%' . $busca . '%')
+                ->where('isAdmin', '=', 1)
+                ->where('status', '=', 1)
+                ->paginate(10);
 
-        return view('admin/admins/index', array('users' => $users, 'busca'=>$busca ));
+            return view('admin/admins/index', array('users' => $users, 'busca'=>$busca ));
+        }
+        
     }
 
 
