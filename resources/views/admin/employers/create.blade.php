@@ -83,7 +83,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <a href="{{url('admin/admins/')}}" class="btn btn-outline-secondary">Voltar</a>
+                                    <a href="{{url('admin/employers/')}}" class="btn btn-outline-secondary">Voltar</a>
                                     <button type="submit" class="btn btn-outline-primary">Salvar</button>
                                 </div>
                             </div>

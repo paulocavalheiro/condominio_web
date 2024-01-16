@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\Hash;
 class employerController extends Controller
 {
 
+    public function index (){
+
+        $users = User::where('isAdmin','=',2)
+                            ->where('status','<>',0)
+                            ->paginate(10);
+        return view('admin/employers/index',array('users'=>$users));
+
+    }
+
 
     public function create (){
         return view('admin/employers/create');
@@ -17,12 +26,20 @@ class employerController extends Controller
 
     public function store(request $request){
 
-        $this->validate($request,[
+        $rules = [
             'name' => 'required|min:5',
-            'email' => 'required|unique:users',
+            'email' => 'required|unique:users|email',
             'password' => 'required|min:6'
+        ];
 
-        ]);
+        $customMessages = [
+            'name.required' => 'O campo nome é obrigatório.',
+            'name.min' => 'O campo nome deve ter pelo menos :min caracteres.',
+            'password.required' => 'O campo senha é obrigatório.',
+            'password.min' => 'O campo senha deve ter pelo menos :min caracteres.'    
+        ];
+
+        $this->validate($request, $rules, $customMessages);
 
         $user = new User();
         $user->name = $request->input('name');
@@ -35,26 +52,24 @@ class employerController extends Controller
         if($user->save()){
             return redirect('admin/employers/create')->with('success','Registro efetuado');
         }
-    }
-
-
-    public function index (){
-
-        $users = User::where('isAdmin','=',2)
-                            ->where('status','<>',0)
-                            ->paginate(10);
-        return view('admin/employers/index',array('users'=>$users));
-
-    }
+    }  
 
 
     public function busca(request $request){
 
         $busca = $request->input('buscaUsuario');
-        $users = User::where('name', 'LIKE', '%' . $busca . '%')
-            ->where('status', '=' ,1)
-            ->orwhere('email', 'LIKE', '%' . $busca . '%')
+        if(!$busca){
+            return $this->index();
+        }else{  
+            $users = User::where(function($query) use ($busca) {
+                $query->where('name', 'LIKE', '%' . $busca . '%')
+                    ->orWhere('email', 'LIKE', '%' . $busca . '%');
+            })
+            ->where('isAdmin', '=', 2)
+            ->where('status', '=', 1)
             ->paginate(10);
+        }
+
         return view('admin/employers/index', array('users' => $users, 'busca'=>$busca ));
 
     }
@@ -63,7 +78,6 @@ class employerController extends Controller
 
         $user = User::find($id);
         return view('admin/employers/edit',compact('user','id'));
-
     }
 
 
@@ -73,7 +87,7 @@ class employerController extends Controller
 
         $this->validate($request,[
             'name' => 'required|min:5',
-            'email' => 'required',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id
 
         ]);
 
@@ -90,7 +104,6 @@ class employerController extends Controller
 
             return redirect( 'admin/employers/'.$id.'/edit')->with('success','Registro alterado');
         }
-
 
     }
 

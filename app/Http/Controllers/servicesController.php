@@ -23,15 +23,6 @@ class servicesController extends Controller
 
     }
 
-
-    public function create(){
-
-        $users = $this->user_controller->listAptNumbers();
-        return view('admin/services/create',($users));
-
-    }
-
-
     public function index(){
 
         $services = Service::where('status', '=', 1)
@@ -40,17 +31,36 @@ class servicesController extends Controller
 
     }
 
+    public function create(){
+
+        $users = $this->user_controller->listAptNumbers();
+        return view('admin/services/create',($users));
+
+    }   
 
     public function store (request $request){
 
-        $this->validate($request,[
+
+        $rules = [
             'nameComp' => 'required|min:3',
             'responsible' => 'required',
             'address' => 'required|min:5',
             'iniServ' => 'required',
             'endServ' => 'required',
             'aptNumber' => 'required'
-        ]);
+        ];
+
+        $customMessages = [
+            'nameComp.required' => 'O campo nome empresa é obrigatório.',
+            'name.min' => 'O campo nome empresa deve ter pelo menos :min caracteres.',
+            'responsible.required' => 'O campo responsável é obrigatório.',
+            'address.required' => 'O campo endereço é obrigatório.',
+            'iniServ.required' => 'O campo inicio serviço é obrigatório.',  
+            'endServ.required' => 'O campo termino serviço é obrigatório.',
+            'aptNumber.required' => 'O campo apartamento é obrigatório.',
+        ];
+
+        $this->validate($request, $rules, $customMessages);
 
         $dateBegin = $this->utilities_controller->dateToEua($request->input('iniServ'));
         $dateEnd   = $this->utilities_controller->dateToEua($request->input('endServ'));
@@ -73,8 +83,6 @@ class servicesController extends Controller
         if($service->save()){
             return redirect ('admin/services/create')->with('success','Registro efetuado');
         }
-
-
     }
 
 

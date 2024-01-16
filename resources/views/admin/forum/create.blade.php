@@ -41,7 +41,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-building"></i></span>
                                         </div>
-                                        <input type="text" id="title" name="title" class="form-control" >
+                                        <input type="text" id="title" name="title" class="form-control" value="{{ old('title') }}" >
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-chalkboard-teacher"></i></span>
                                         </div>
-                                        <textarea id="description" name="description" class="form-control"></textarea>
+                                        <textarea id="description" name="description" class="form-control" value="{{ old('description') }}" ></textarea>
 
                                     </div>
                                 </div>

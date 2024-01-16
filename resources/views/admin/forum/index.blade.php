@@ -6,10 +6,10 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header bg-light col-md-6">
+                <div class="card-header bg-light col-md-12">
                    Noticias
                 </div>
-                <form method="POST" action="{{url('admin/forum/busca')}}">
+                <form method="POST" class="form-table" action="{{url('admin/forum/busca')}}">
                     @csrf
                     <div class="col-md-4" style="float: right">
                         <div class="input-group mb-3">
@@ -58,14 +58,14 @@
                                             <td>{{$forum->id}}</td>
                                             <td>{{$forum->titleForum}}</td>
                                             <td>{{\Carbon\Carbon::parse($forum->created_at)->format('d/m/Y')}}</td>
-                                            <td><a href="forum/{{$forum->id}}/edit" class="" ><i class="fa fa-pencil-alt"></i></a></td>
+                                            <td><a href="{{isset($busca) ? '' : '../admin/forum/'}}{{$forum->id}}/edit" class="" ><i class="fa fa-pencil-alt"></i></a></td>
                                             <td><a href=""  class="confirm-delete" data-toggle="modal" data-target="#modal-7" data-id="{{$forum->id}}" data-title="{{$forum->titleForum}}"><i class="icon icon-close"> </i> </a></td>
                                         </tr>
                                     @endforeach
                                 @else
 
                                     <tr>
-                                        <td colspan="6">Nenhum registro encontrado</td>
+                                        <td>Nenhum registro encontrado</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>

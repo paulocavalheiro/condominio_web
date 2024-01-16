@@ -10,7 +10,7 @@
                    Administradores
                 </div>
 
-                <form method="POST" class="form-table" formaction="{{ url('admin/admins/busca') }}">                
+                <form method="POST" class="form-table" action="{{url('admin/admins/busca')}}">
                     @csrf
                     <div class="col-md-4" style="float: right">
                         <div class="input-group mb-3">
@@ -26,7 +26,7 @@
                                 <input type="text" id="buscaUsuario" name="buscaUsuario" class="form-control" placeholder="Busca"  >
                                 <div class="input-group-apend">
 
-                                    <button class="btn btn-outline-dark ">Buscar</button>
+                                    <button class="btn btn-outline-dark">Buscar</button>
                                 </div>
                             @endif
                         </div>
@@ -63,7 +63,7 @@
                                         <td>{{$user->name}}</td>
                                         <td>{{$user->email}}</td>
                                         <td>{{Carbon\Carbon::parse($user->created_at)->format('d/m/Y')}}</td>
-                                        <td><a href="admins/{{$user->id}}/edit" class="" ><i class="fa fa-pencil-alt"></i></a></td>
+                                        <td><a href="{{isset($busca) ? '' : '../admin/admins/'}}{{$user->id}}/edit" class="" ><i class="fa fa-pencil-alt"></i></a></td>
                                         <td><a href=""  class="confirm-delete" data-toggle="modal" data-target="#modal-7" data-id="{{$user->id}}" data-title="{{$user->name}}"><i class="icon icon-close"> </i> </a></td>
                                     </tr>
                                 @endforeach
@@ -129,37 +129,36 @@
 
             document.getElementById("nameUser").innerHTML = name;
             var a = document.querySelector('a[href="trocalink"]');
-            /*
             if (a) {
-                // @if(isset($users) && !$users->isEmpty() )
-                //     a.setAttribute('href', 'admins/{{$user->id}}/destroy')
-                // @endif
+                @if(isset($users) && !$users->isEmpty() )
+                    a.setAttribute('href', 'admins/{{$user->id}}/destroy')
+                @endif
             }
-            */
+            
         });
 
-        $('.search-user').on('click', function(e) {
-            console.log($('#buscaUsuario').val() )
+        // $('.search-user').on('click', function(e) {
+        //     console.log($('#buscaUsuario').val() )
 
-            e.preventDefault();
+        //     e.preventDefault();
 
-            $.ajax({
-                type: 'POST',
-                url: "{{ URL::to('admin/admins/busca') }}",
-                data: { 
-                    "_token": "{{ csrf_token() }}",
-                    buscaUsuario: $('#buscaUsuario').val() 
-                },
-                success: function(response) {
-                    // Manipule a resposta aqui
-                    console.log(response);
-                },
-                error: function(error) {
-                    console.error('Erro na solicitação AJAX', error);
-                }
-            });
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: "{{ URL::to('admin/admins/busca') }}",
+        //         data: { 
+        //             "_token": "{{ csrf_token() }}",
+        //             buscaUsuario: $('#buscaUsuario').val() 
+        //         },
+        //         success: function(response) {
+        //             // Manipule a resposta aqui
+        //             console.log(response);
+        //         },
+        //         error: function(error) {
+        //             console.error('Erro na solicitação AJAX', error);
+        //         }
+        //     });
 
-        });
+        // });
 
     </script>
 @stop

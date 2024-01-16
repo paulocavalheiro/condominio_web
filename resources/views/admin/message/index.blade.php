@@ -6,10 +6,10 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header bg-light col-md-6">
+                <div class="card-header bg-light col-md-12">
                    Noticias
                 </div>
-                <form method="POST" action="{{url('admin/message/busca')}}">
+                <form method="POST" class="form-table" action="{{url('admin/message/busca')}}">
                     @csrf
                     <div class="col-md-4" style="float: right">
                         <div class="input-group mb-3">
@@ -68,7 +68,7 @@
                                 @else
 
                                     <tr>
-                                        <td colspan="6">Nenhum registro encontrado</td>
+                                        <td>Nenhum registro encontrado</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>

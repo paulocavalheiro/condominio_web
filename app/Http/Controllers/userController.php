@@ -16,8 +16,8 @@ class userController extends Controller
     }
 
 
-    public function index()
-    {
+    public function index(){
+
         $users = User::where('isAdmin', '=', 0)
                             ->where('status','<>',0)
                             ->paginate(5);
@@ -26,17 +26,27 @@ class userController extends Controller
     }
 
 
-    public function store(request $request)
-    {
+    public function store(request $request){
 
-        $this->validate($request,[
+        $rules = [
             'name' => 'required|min:5',
-            'email' => 'required|unique:users',
+            'email' => 'required|unique:users|email',
             'aptNumber' => 'required|min:3|unique:users',
             'block' => 'required',
             'password' => 'required|min:6'
+        ];
 
-        ]);
+        $customMessages = [
+            'name.required' => 'O campo nome é obrigatório.',
+            'name.min' => 'O campo nome deve ter pelo menos :min caracteres.',
+            'aptNumber.required' => 'O campo número apt é obrigatório.',
+            'aptNumber.min' => 'O campo número apt deve ter pelo menos :min caracteres.',
+            'block.required' => 'O campo bloco é obrigatório.',
+            'password.required' => 'O campo senha é obrigatório.',
+            'password.min' => 'O campo senha deve ter pelo menos :min caracteres.'    
+        ];
+
+        $this->validate($request, $rules, $customMessages);
 
         $user = new User();
         $user->name = $request->input('name');
@@ -69,12 +79,24 @@ class userController extends Controller
 
         $user = User::find($id);
 
-        $this->validate($request,[
+        $rules = [
             'name' => 'required|min:5',
-            'email' => 'required',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
             'aptNumber' => 'required|min:3',
             'block' => 'required'
-        ]);
+        ];
+
+        $customMessages = [
+            'name.required' => 'O campo nome é obrigatório.',
+            'name.min' => 'O campo nome deve ter pelo menos :min caracteres.',
+            'aptNumber.required' => 'O campo número apt é obrigatório.',
+            'aptNumber.min' => 'O campo número apt deve ter pelo menos :min caracteres.',
+            'block.required' => 'O campo bloco é obrigatório.',
+            'password.required' => 'O campo senha é obrigatório.',
+            'password.min' => 'O campo senha deve ter pelo menos :min caracteres.'    
+        ];
+
+        $this->validate($request, $rules, $customMessages);
 
         $user->name = $request->input('name');
         $user->email = $request->input('email');
@@ -92,7 +114,7 @@ class userController extends Controller
         $user->block = $request->input('block');
 
         if($user->update()){
-//            $this->emailPassword($request->input('name'),$request->input('email'));
+
             return redirect( 'admin/users/'.$id.'/edit')->with('message','Registro alterado');
         }
 
@@ -125,7 +147,7 @@ class userController extends Controller
 
         $user = User::find($id);
         $user->status = 0;
-        var_dump($user);
+        
         if($user->update()){
             return redirect('admin/users/')->with('message','Registro deletado');
         }
@@ -136,10 +158,19 @@ class userController extends Controller
     public function busca(request $request){
 
         $busca = $request->input('buscaUsuario');
-        $users = User::where('name', 'LIKE', '%' . $busca . '%')
-                            ->orwhere('email', 'LIKE', '%' . $busca . '%')
-                            ->paginate(10);
-        return view('admin/users/index', array('users' => $users, 'busca'=>$busca ));
+        if(!$busca){
+            return $this->index();
+        }else{            
+            $users = User::where(function($query) use ($busca) {
+                $query->where('name', 'LIKE', '%' . $busca . '%')
+                      ->orWhere('email', 'LIKE', '%' . $busca . '%');
+            })
+            ->where('isAdmin', '=', 0)
+            ->where('status', '=', 1)
+            ->paginate(10);
+
+            return view('admin/users/index', array('users' => $users, 'busca'=>$busca ));
+        }       
 
     }
 

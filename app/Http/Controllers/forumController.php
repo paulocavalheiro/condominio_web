@@ -31,6 +31,21 @@ class forumController extends Controller
 
         $userInfo = $this->utilities_controller->sessionUser();
 
+        $rules = [
+            'title' => 'required|min:3',
+            'description' => 'required|min:5'
+        ];
+
+        $customMessages = [
+            'title.required' => 'O campo titulo é obrigatório.',
+            'title.min' => 'O campo titulo deve ter pelo menos :min caracteres.',
+            'description.required' => 'O campo descrição é obrigatório.',
+            'description.min' => 'O campo descrição deve ter pelo menos :min caracteres.'    
+        ];
+
+        $this->validate($request, $rules, $customMessages);
+
+
         $this->validate($request, [
             'title' => 'required|min:3',
             'description' => 'required|min:5'

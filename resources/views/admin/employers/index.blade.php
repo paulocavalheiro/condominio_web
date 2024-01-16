@@ -9,7 +9,7 @@
                 <div class="card-header bg-light col-md-12">
                    Portaria
                 </div>
-                <form method="POST" action="{{url('admin/employers/busca')}}">
+                <form method="POST" class="form-table" action="{{url('admin/employers/busca')}}">
                     @csrf
                     <div class="col-md-4" style="float: right">
                         <div class="input-group mb-3">
@@ -61,14 +61,14 @@
                                             <td>{{$user->name}}</td>
                                             <td>{{$user->email}}</td>
                                             <td>{{\Carbon\Carbon::parse($user->created_at)->format('d/m/Y')}}</td>
-                                            <td><a href="employers/{{$user->id}}/edit" class="" ><i class="fa fa-pencil-alt"></i></a></td>
+                                            <td><a href="{{isset($busca) ? '' : '../admin/employers/'}}{{$user->id}}/edit" class="" ><i class="fa fa-pencil-alt"></i></a></td>
                                             <td><a href=""  class="confirm-delete" data-toggle="modal" data-target="#modal-7" data-id="{{$user->id}}" data-title="{{$user->name}}"><i class="icon icon-close"> </i> </a></td>
                                         </tr>
                                     @endforeach
                                 @else
 
                                     <tr>
-                                        <td colspan="6">Nenhum registro encontrado</td>
+                                        <td>Nenhum registro encontrado</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>

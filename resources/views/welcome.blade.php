@@ -35,6 +35,7 @@
                 position: absolute;
                 right: 10px;
                 top: 18px;
+                display:flex;
             }
 
             .content {
@@ -67,8 +68,8 @@
                     @auth
                         <a href="{{ url('user/home') }}">Home</a>
                     @else
-                        <a href="{{ route('login') }}">Acessar</a>
-                        <a href="{{ route('register') }}">Registrar</a>
+                        <a href="{{ route('login') }}"><h3>Acessar</h3></a>
+                        <a href="{{ route('register') }}"><h3>Registrar</h3></a>
                     @endauth
                 </div>
             @endif

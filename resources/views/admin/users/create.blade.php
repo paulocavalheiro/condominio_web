@@ -41,7 +41,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-user"></i></span>
                                         </div>
-                                        <input type="text" id="name" name="name" class="form-control" >
+                                        <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}" >
                                     </div>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">@</span>
                                         </div>
-                                        <input type="text" id="email" name="email" class="form-control" >
+                                        <input type="text" id="email" name="email" class="form-control" value="{{ old('email') }}" >
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-building"></i></span>
                                         </div>
-                                        <input type="text" id="block" name="block" class="form-control" >
+                                        <input type="text" id="block" name="block" class="form-control" value="{{ old('block') }}" >
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-bed"></i></span>
                                         </div>
-                                        <input type="text" id="aptNumber" name="aptNumber" class="form-control" >
+                                        <input type="text" id="aptNumber" name="aptNumber" class="form-control" value="{{ old('aptNumber') }}" >
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-car"></i></span>
                                         </div>
-                                        <input type="text" id="veic1" name="veic1" class="form-control" >
+                                        <input type="text" id="veic1" name="veic1" class="form-control" value="{{ old('veic1') }}" >
                                     </div>
                                 </div>
                             </div>
@@ -101,7 +101,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-audio-description"></i></span>
                                         </div>
-                                        <input type="text" id="plate1" name="plate1" class="form-control" >
+                                        <input type="text" id="plate1" name="plate1" class="form-control"  value="{{ old('plate1') }}" >
                                     </div>
                                 </div>
                             </div>
@@ -113,7 +113,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-car"></i></span>
                                         </div>
-                                        <input type="text" id="veic2" name="veic2" class="form-control" >
+                                        <input type="text" id="veic2" name="veic2" class="form-control" value="{{ old('veic2') }}">
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-audio-description"></i></span>
                                         </div>
-                                        <input type="text" id="plate2" name="plate2" class="form-control" >
+                                        <input type="text" id="plate2" name="plate2" class="form-control" value="{{ old('plate2') }}">
                                     </div>
                                 </div>
                             </div>
@@ -137,7 +137,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="icon icon-phone"></i></span>
                                         </div>
-                                        <input type="text" id="phone" name="phone" class="form-control" >
+                                        <input type="text" id="phone" name="phone" class="form-control" value="{{ old('phone') }}" >
                                     </div>
                                 </div>
                             </div>
@@ -149,7 +149,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-low-vision"></i> </span>
                                         </div>
-                                        <input type="password" id="password" name="password" class="form-control" >
+                                        <input type="password" id="password" name="password" class="form-control" value="{{ old('password') }}" >
                                     </div>
                                 </div>
                             </div>

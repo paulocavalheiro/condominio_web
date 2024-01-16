@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class adminController extends Controller
 {
@@ -24,14 +26,22 @@ class adminController extends Controller
     }
 
     public function store(request $request){
-
-        $this->validate($request,[
+     
+        $rules = [
             'name' => 'required|min:5',
             'email' => 'required|unique:users|email',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6'];
 
-        ]);
 
+        $customMessages = [
+            'name.required' => 'O campo nome é obrigatório.',
+            'name.min' => 'O campo nome deve ter pelo menos :min caracteres.',
+            'password.required' => 'O campo senha é obrigatória.',
+            'password.min' => 'O campo senha deve ter pelo menos :min caracteres.'        
+        ];
+           
+        $this->validate($request, $rules, $customMessages);
+        
         $user = new User();
         $user->name = $request->input('name');
         $user->email = $request->input('email');
@@ -46,7 +56,7 @@ class adminController extends Controller
 
 
     public function edit($id){
-
+       
         $user = User::find($id);
         return view('admin/admins.edit',compact('user','id') );
 
@@ -57,10 +67,18 @@ class adminController extends Controller
 
         $user = User::find($id);
 
-        $this->validate($request,[
+        $rules = [
             'name' => 'required|min:5',
-            'email' => 'required|email|unique:users'
-        ]);
+            'email' => 'required|string|email|max:255|unique:users,email,'.$user->id,
+        ];
+
+        $customMessages = [
+            'name.required' => 'O campo nome é obrigatório.',
+            'name.min' => 'O campo nome deve ter pelo menos :min caracteres.',
+               
+        ];
+
+        $this->validate($request, $rules, $customMessages);
 
         $user->name = $request->get('name');
         $user->email = $request->get('email');
@@ -87,16 +105,19 @@ class adminController extends Controller
 
 
     public function busca(request $request){
-        
+ 
         $busca = $request->input('buscaUsuario');
         if(!$busca){
             return $this->index();
-        }else{            
-            $users = User::where('name', 'LIKE', '%' . $busca . '%')
-                ->orwhere('email', 'LIKE', '%' . $busca . '%')
-                ->where('isAdmin', '=', 1)
-                ->where('status', '=', 1)
-                ->paginate(10);
+        }else{     
+            
+            $users = User::where(function($query) use ($busca){
+                $query->where('name', 'LIKE', '%' . $busca . '%')
+                ->orWhere('email', 'LIKE', '%' . $busca . '%');
+            })
+            ->where('isAdmin', '=', 1)
+            ->where('status', '=', 1)
+            ->paginate(10);
 
             return view('admin/admins/index', array('users' => $users, 'busca'=>$busca ));
         }

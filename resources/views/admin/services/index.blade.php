@@ -6,10 +6,10 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header bg-light col-md-6">
+                <div class="card-header bg-light col-md-12">
                    Serviços
                 </div>
-                <form method="POST" action="{{url('admin/services/busca')}}">
+                <form method="POST" class="form-table" action="{{url('admin/services/busca')}}">
                     @csrf
                     <div class="col-md-4" style="float: right">
                         <div class="input-group mb-3">
@@ -60,14 +60,14 @@
                                             <td>{{$service->nameComp}}</td>
                                             <td>{{$service->responsibleComp}}</td>
                                             <td>{{$service->aptNumber}}</td>
-                                            <td><a href="services/{{$service->id}}/edit" class="" ><i class="fa fa-pencil-alt"></i></a></td>
+                                            <td><a href="{{isset($busca) ? '' : '../admin/services/'}}{{$service->id}}/edit" class="" ><i class="fa fa-pencil-alt"></i></a></td>
                                             <td><a href=""  class="confirm-delete" data-toggle="modal" data-target="#modal-7" data-id="{{$service->id}}" data-title="{{$service->nameComp}}"><i class="icon icon-close"> </i> </a></td>
                                         </tr>
                                     @endforeach
                                 @else
 
                                     <tr>
-                                        <td colspan="6">Nenhum registro encontrado</td>
+                                        <td>Nenhum registro encontrado</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
