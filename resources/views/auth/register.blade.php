@@ -64,7 +64,7 @@
                             <div class="col-md-6">
                                 <select class="selectpicker form-control" id="admin" name="admin">
                                     <option value="1">Sim</option>
-                                    <option value="0">Não</option>
+                                   
                                 </select>
                             </div>
                         

@@ -6,27 +6,35 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected $redirectTo = '/home';
+   
 
-    public function __construct()
-    {
+    public function __construct(){
+
         $this->middleware('guest')->except('logout');
+
     }
 
-    protected function validateLogin(Request $request){
+    protected function authenticated(Request $request, $user){
+
+        if ($user->isAdmin === 1) {
+            return redirect()->intended('/admin/admins');
+        } else{
+            return redirect()->intended('admin/employers');
+        }    
+    }
+
+    protected function validateLogin(Request $request) {
+
         $request->validate([
             $this->username() => 'required|string|email',
             'password' => 'required|string',
-            
         ], [
             'password.required' => 'O campo senha é obrigatório.',
-            
         ]);
     }
 }

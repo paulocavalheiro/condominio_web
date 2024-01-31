@@ -22,10 +22,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-   /* public function index()
-    {
-        return view('home');
-    }*/
+ 
 
     public function index()
     {
@@ -36,7 +33,7 @@ class HomeController extends Controller
 
             } else {
 
-                return view('user/home');
+                return view('/welcome');
 
             }
         }else{
@@ -47,7 +44,7 @@ class HomeController extends Controller
 
     public function admin()
     {
-        //return view('admin.home');
+        return view('/welcome');
     }
 
 

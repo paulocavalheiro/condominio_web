@@ -15,6 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/welcome', function () {
+    return view('welcome');
+});
+
+Route::get('/home', function () {
+    return view('home');
+});
+
 /* administrador */
 
 /* admins ------------------------------------------------------------*/
@@ -79,4 +87,3 @@ Route::post('admin/message/busca','messageController@busca')->middleware('Admin'
 //Route::post('admin/residences/store','residenceController@store')->middleware('Admin');
 
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');

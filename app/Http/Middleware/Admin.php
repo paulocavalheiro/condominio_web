@@ -28,24 +28,20 @@ class Admin
                 'id'=>auth()->user()->id,
                 'isAdmin'=>auth()->user()->isAdmin
             ]);
-
+           
             if(auth()->user()->isAdmin == 1 ){
                 return $next($request);
             }
             if(auth()->user()->isAdmin == 2 ){
-                return new Response(view('admin/error')->with('message','Acesso negado'));
+                $view = view('admin.error')->with('message', 'Acesso negado, usuários têm acesso somente à portaria e serviços');     
+                return new Response($view);
             }
 
         }else{
             return redirect('home')->with('error','Acesso negado');
         }
 
-//        Session::put('userSession', [
-//            'name'=>auth()->user()->name,
-//            'id'=>auth()->user()->id,
-//            'isAdmin'=>auth()->user()->isAdmin
-//        ]);
-        //return redirect('home'    )->with('error','Acesso negado');
+
     }
 
 

@@ -1,0 +1,71 @@
+
+services:
+  app:
+    build:
+      args:
+        user: docker_user
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: condominio
+    container_name: condominio-app
+    restart: unless-stopped
+    environment:
+      - SERVICE_NAME=app
+    volumes:
+      - ./:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks: 
+        - condominio-net
+
+  db:
+    image: mysql:5.7
+    container_name: condominio-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=condominio_app 
+      - SERVICE_NAME=db     
+    volumes:
+      - dbdata:/var/lib/mysql/
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+    ports:
+      - 3307:3306
+    networks:
+      - condominio-net
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: condominio-my_admin
+    # links:
+    #   - db
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+      - SERVICE_NAME=phpmyadmin
+    networks:
+      - condominio-net  
+     
+
+  web-server:
+    image: nginx:alpine
+    container_name: condominio-web_server
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    environment:
+      - SERVICE_NAME=server
+    networks:
+      - condominio-net
+
+networks:
+  condominio-net:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local    

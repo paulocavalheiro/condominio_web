@@ -65,12 +65,11 @@
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
-                    @auth
-                        <a href="{{ url('user/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}"><h3>Acessar</h3></a>
-                        <a href="{{ route('register') }}"><h3>Registrar</h3></a>
-                    @endauth
+                @guest
+                    <a href="#"><h3>Você não está logado</h3></a>
+                    <a href="{{ route('login') }}"><h3>Acessar</h3></a>
+                    <a href="{{ route('register') }}"><h3>Registrar</h3></a>
+                @endguest
                 </div>
             @endif
              <img src="{{asset('/frontEnd2')}}/imgs/bkg.jpg" alt="logo" width="100%" height="100%">

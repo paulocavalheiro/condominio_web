@@ -23,37 +23,45 @@ Laravel is accessible, yet powerful, providing tools needed for large, robust ap
 
 ## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+   version 5.6
+   https://laravel.com/docs/5.6 
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+## Config
 
-## Laravel Sponsors
+    - instale docker/docker-desktop
+    https://www.docker.com/products/docker-desktop/
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
+    -configure dados do banco .env
+    DB_CONNECTION=mysql
+    DB_HOST=db
+    DB_PORT=3306
+    DB_DATABASE=condominio_app
+    DB_USERNAME=<defina user>  * deve ser o mesmo do docker-compose.yaml / app:user
+    DB_PASSWORD=<defina senha>
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
+    -inicier os contêineres
+    docker-compose up -d
 
-## Contributing
+    -verifique o status
+    docker ps
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    -execute os comandos do artisan no conteiner app *obs pode ser preciso dar permissão na pasta www do app
+    docker-compose exec app php artisan key:generate
+    docker-compose exec app php artisan config:cache
 
-## Security Vulnerabilities
+    -execute os comandos no conteiner do db
+    docker-compose exec db bash
+    mysql -u root -p
+    show databases;
+    GRANT ALL ON <userdefinido>.* TO '<userdefinido>'@'%' IDENTIFIED BY '<senhadefinida>';
+    FLUSH PRIVILEGES;
+    EXIT;
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    -execute novamente no app
+    docker-compose exec app php artisan migrate
+   
+
+
 
 ## License
 
