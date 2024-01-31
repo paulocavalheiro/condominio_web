@@ -59,7 +59,8 @@ Laravel is accessible, yet powerful, providing tools needed for large, robust ap
 
     -execute novamente no app
     docker-compose exec app php artisan migrate
-   
+
+    
 
 
 
