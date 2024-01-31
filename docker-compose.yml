@@ -37,8 +37,8 @@ services:
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: condominio-my_admin
-    # links:
-    #   - db
+    links:
+      - db
     ports:
       - 8080:80
     environment:
