@@ -46,6 +46,8 @@ Laravel is accessible, yet powerful, providing tools needed for large, robust ap
     docker ps
 
     -execute os comandos do artisan no conteiner app *obs pode ser preciso dar permissão na pasta www do app
+    composer dump-autoload
+    composer install --no-scripts
     docker-compose exec app php artisan key:generate
     docker-compose exec app php artisan config:cache
 
