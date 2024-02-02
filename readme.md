@@ -34,7 +34,7 @@ Laravel is accessible, yet powerful, providing tools needed for large, robust ap
     -configure dados do banco .env
     DB_CONNECTION=mysql
     DB_HOST=db
-    DB_PORT=3306
+    DB_PORT=<dfina porta>
     DB_DATABASE=condominio_app
     DB_USERNAME=<defina user>  * deve ser o mesmo do docker-compose.yaml / app:user
     DB_PASSWORD=<defina senha>
